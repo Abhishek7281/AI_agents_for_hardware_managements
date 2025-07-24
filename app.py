@@ -173,6 +173,7 @@ if uploaded_file:
             df,
             verbose=True,
             handle_parsing_errors=True,
+            allow_dangerous_code=True,
             agent_type="openai-tools",  # robust with tabular data
         )
 
