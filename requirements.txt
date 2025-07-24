@@ -3,3 +3,4 @@ langchain
 pandas 
 transformers 
 torch
+langchain-community
