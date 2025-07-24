@@ -64,7 +64,8 @@ if uploaded_file:
         st.dataframe(df.head())
 
         # Use LangChain with GPT-2
-        agent = create_pandas_dataframe_agent(llm, df, verbose=False, allow_dangerous_code=True)
+        agent = create_pandas_dataframe_agent(llm, df, verbose=False, allow_dangerous_code=True,
+    handle_parsing_errors=True)
 
         query = st.text_input("💬 Ask a question about your hardware data:")
         if query:
