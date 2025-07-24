@@ -21,4 +21,4 @@ langchain-community
 # (Optional) For working with Excel files
 openpyxl
 langchain-experimental
-
+tabulate
