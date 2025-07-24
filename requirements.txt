@@ -6,19 +6,30 @@
 #langchain-community
 
 # Core functionality
-streamlit
-pandas
+#streamlit
+##pandas
 
 # HuggingFace LLM support
-transformers
-accelerate
-torch
+#transformers
+#accelerate
+#torch
 
 # LangChain core + community integrations
-langchain>=0.1.0
-langchain-community
+#langchain>=0.1.0
+#langchain-community
 
 # (Optional) For working with Excel files
-openpyxl
+#openpyxl
+#langchain-experimental
+#tabulate
+
+streamlit
+pandas
+torch
+transformers
+accelerate
+langchain
+langchain-community
 langchain-experimental
-tabulate
+openpyxl
+
