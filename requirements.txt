@@ -1,6 +1,23 @@
 streamlit 
-langchain 
-pandas 
-transformers 
+#langchain 
+#pandas 
+#transformers 
+#torch
+#langchain-community
+
+# Core functionality
+streamlit
+pandas
+
+# HuggingFace LLM support
+transformers
+accelerate
 torch
+
+# LangChain core + community integrations
+langchain>=0.1.0
 langchain-community
+
+# (Optional) For working with Excel files
+openpyxl
+
