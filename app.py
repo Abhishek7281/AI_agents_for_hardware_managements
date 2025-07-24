@@ -45,7 +45,8 @@ from langchain_community.llms import HuggingFacePipeline
 from langchain_experimental.agents import create_pandas_dataframe_agent
 
 # Load GPT-2 locally
-checkpoint = "gpt2"
+#checkpoint = "gpt2"
+checkpoint = "mistralai/Mistral-7B-Instruct-v0.2"
 tokenizer = AutoTokenizer.from_pretrained(checkpoint)
 model = AutoModelForCausalLM.from_pretrained(checkpoint)
 pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=100)
