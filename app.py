@@ -145,49 +145,95 @@
 
 
 
+# import streamlit as st
+# import pandas as pd
+
+# from langchain_community.llms import Ollama
+# from langchain_experimental.agents import create_pandas_dataframe_agent
+
+# # --- Streamlit UI ---
+# st.set_page_config(layout="centered")
+# st.title("🤖 Local GPT-2-like Hardware Agent (Mistral via Ollama)")
+# st.markdown("Upload your Excel hardware sheet and ask questions about it.")
+
+# # --- File upload ---
+# uploaded_file = st.file_uploader("📤 Upload Excel File", type=["xlsx"])
+# if uploaded_file:
+#     try:
+#         df = pd.read_excel(uploaded_file)
+#         st.success("✅ File uploaded successfully!")
+#         st.dataframe(df)
+
+#         # Load Mistral model via Ollama
+#         llm = Ollama(model="mistral")
+
+#         # Create agent
+#         agent = create_pandas_dataframe_agent(
+#             llm,
+#             df,
+#             verbose=True,
+#             handle_parsing_errors=True,
+#             allow_dangerous_code=True,
+#             agent_type="openai-tools",  # robust with tabular data
+#         )
+
+#         # User question
+#         user_query = st.text_input("💬 Ask a question about your hardware data:")
+#         if user_query:
+#             with st.spinner("🧠 Thinking..."):
+#                 try:
+#                     answer = agent.run(user_query)
+#                     st.success("📌 Answer:")
+#                     st.write(answer)
+#                 except Exception as e:
+#                     st.error(f"❌ Error processing question: {e}")
+
+#     except Exception as e:
+#         st.error(f"❌ Error reading Excel file: {e}")
+
+
 import streamlit as st
 import pandas as pd
+from langchain_ollama import Ollama
+from langchain_experimental.agents.agent_toolkits import create_pandas_dataframe_agent
 
-from langchain_community.llms import Ollama
-from langchain_experimental.agents import create_pandas_dataframe_agent
+# -- Streamlit UI Setup --
+st.set_page_config(page_title="Local GPT Hardware Agent", layout="centered")
+st.title("🧠 Local GPT Hardware Management Agent")
+st.markdown("Upload your Excel hardware sheet and ask questions.")
 
-# --- Streamlit UI ---
-st.set_page_config(layout="centered")
-st.title("🤖 Local GPT-2-like Hardware Agent (Mistral via Ollama)")
-st.markdown("Upload your Excel hardware sheet and ask questions about it.")
-
-# --- File upload ---
+# -- File Upload --
 uploaded_file = st.file_uploader("📤 Upload Excel File", type=["xlsx"])
+
+# -- User Question Input --
+user_query = st.text_input("💬 Ask a question about your hardware data:")
+
+# -- If File is Uploaded --
 if uploaded_file:
     try:
+        # Read Excel file into DataFrame
         df = pd.read_excel(uploaded_file)
         st.success("✅ File uploaded successfully!")
-        st.dataframe(df)
+        st.write("### Preview of uploaded data:")
+        st.dataframe(df.head())
 
-        # Load Mistral model via Ollama
+        # Initialize Ollama with Mistral
         llm = Ollama(model="mistral")
 
-        # Create agent
-        agent = create_pandas_dataframe_agent(
-            llm,
-            df,
-            verbose=True,
-            handle_parsing_errors=True,
-            allow_dangerous_code=True,
-            agent_type="openai-tools",  # robust with tabular data
-        )
+        # Create LangChain Agent
+        agent = create_pandas_dataframe_agent(llm, df, verbose=True)
 
-        # User question
-        user_query = st.text_input("💬 Ask a question about your hardware data:")
+        # Handle query
         if user_query:
-            with st.spinner("🧠 Thinking..."):
-                try:
-                    answer = agent.run(user_query)
-                    st.success("📌 Answer:")
-                    st.write(answer)
-                except Exception as e:
-                    st.error(f"❌ Error processing question: {e}")
+            with st.spinner("Thinking..."):
+                response = agent.invoke(user_query)
+                st.success("✅ Answer:")
+                st.write(response)
 
     except Exception as e:
-        st.error(f"❌ Error reading Excel file: {e}")
+        st.error(f"❌ Error: {str(e)}")
+
+else:
+    st.info("Please upload an Excel file to get started.")
+
 
