@@ -32,4 +32,5 @@ langchain
 langchain-community
 langchain-experimental
 openpyxl
+langchain_ollama
 
